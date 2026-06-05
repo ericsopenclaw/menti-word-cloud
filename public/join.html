@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>送出文字</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="audience">
+    <main class="phone-shell">
+      <section class="submit-panel">
+        <p class="eyebrow">Audience Input</p>
+        <h1>輸入你的關鍵字</h1>
+        <p class="hint">可輸入一個詞，也可用逗號分隔多個詞。</p>
+
+        <form id="wordForm">
+          <label for="wordInput">文字</label>
+          <textarea id="wordInput" maxlength="120" rows="4" placeholder="例如：AI、影像品質、效率"></textarea>
+          <button type="submit">送出</button>
+        </form>
+
+        <p id="statusText" class="status-text">連線中...</p>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/join.js"></script>
+  </body>
+</html>

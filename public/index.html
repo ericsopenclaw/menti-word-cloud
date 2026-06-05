@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>即時文字雲</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="presenter">
+    <main class="stage">
+      <section class="cloud-panel" aria-label="即時文字雲">
+        <div class="stage-top">
+          <div>
+            <p class="eyebrow">Live Word Cloud</p>
+            <h1>你現在想到的一個關鍵字？</h1>
+          </div>
+          <div class="counter">
+            <span id="entryCount">0</span>
+            <small>則回應</small>
+          </div>
+        </div>
+
+        <div id="wordCloud" class="word-cloud" aria-live="polite">
+          <div class="empty-state">等待第一筆回應</div>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <div class="qr-card">
+          <img id="qrCode" alt="掃描後輸入文字" />
+          <p>掃描 QR code 送出文字</p>
+          <a id="joinUrl" href="/join.html" target="_blank" rel="noreferrer">開啟輸入頁</a>
+        </div>
+
+        <div class="controls">
+          <button id="clearButton" type="button">清空文字雲</button>
+          <button id="demoButton" type="button">加入示範詞</button>
+        </div>
+      </aside>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

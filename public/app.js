@@ -1,0 +1,71 @@
+const socket = io();
+const cloud = document.querySelector("#wordCloud");
+const entryCount = document.querySelector("#entryCount");
+const qrCode = document.querySelector("#qrCode");
+const joinUrl = document.querySelector("#joinUrl");
+const clearButton = document.querySelector("#clearButton");
+const demoButton = document.querySelector("#demoButton");
+
+const demoWords = [
+  "AI",
+  "效率",
+  "影像品質",
+  "臨床決策",
+  "報告速度",
+  "團隊合作",
+  "精準醫療",
+  "Workflow",
+  "病人安全",
+  "自動化"
+];
+
+fetch("/api/info")
+  .then((response) => response.json())
+  .then((info) => {
+    qrCode.src = info.qrDataUrl;
+    joinUrl.href = info.joinUrl;
+    joinUrl.textContent = info.joinUrl;
+    renderCloud(info.words, info.totalEntries);
+  });
+
+socket.on("cloud:update", (state) => {
+  renderCloud(state.words, state.totalEntries);
+});
+
+clearButton.addEventListener("click", () => {
+  socket.emit("cloud:clear");
+});
+
+demoButton.addEventListener("click", () => {
+  const word = demoWords[Math.floor(Math.random() * demoWords.length)];
+  socket.emit("word:add", { text: word });
+});
+
+function renderCloud(words, totalEntries) {
+  entryCount.textContent = totalEntries;
+  cloud.innerHTML = "";
+
+  if (!words || words.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent = "等待第一筆回應";
+    cloud.append(empty);
+    return;
+  }
+
+  const max = Math.max(...words.map((word) => word.count));
+  const palette = ["ink", "blue", "green", "rose", "amber", "violet"];
+
+  words.forEach((word, index) => {
+    const node = document.createElement("span");
+    const weight = max === 1 ? 0.5 : word.count / max;
+    const size = 22 + weight * 58;
+    node.className = `cloud-word ${palette[index % palette.length]}`;
+    node.style.fontSize = `${size}px`;
+    node.style.setProperty("--mobile-size", `${Math.min(size, 42)}px`);
+    node.style.setProperty("--tilt", `${(index % 5) * 2 - 4}deg`);
+    node.textContent = word.text;
+    node.title = `${word.count} 次`;
+    cloud.append(node);
+  });
+}
