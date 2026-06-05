@@ -1,16 +1,16 @@
 :root {
   color-scheme: light;
-  --bg: #f6f2eb;
-  --ink: #172033;
-  --muted: #667085;
-  --line: #d9d2c6;
-  --paper: #fffdf8;
-  --blue: #2563eb;
-  --green: #047857;
-  --rose: #be123c;
-  --amber: #b45309;
-  --violet: #7c3aed;
-  --shadow: 0 24px 80px rgba(23, 32, 51, 0.14);
+  --ink: #142032;
+  --muted: #5d697c;
+  --line: rgba(20, 32, 50, 0.12);
+  --paper: rgba(255, 255, 255, 0.86);
+  --panel: rgba(255, 255, 255, 0.74);
+  --blue: #1685c7;
+  --green: #3b9d7d;
+  --rose: #d45236;
+  --amber: #e8b914;
+  --violet: #7d6fd1;
+  --shadow: 0 26px 70px rgba(22, 38, 61, 0.18);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -22,10 +22,18 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(120deg, rgba(37, 99, 235, 0.12), transparent 34%),
-    linear-gradient(240deg, rgba(4, 120, 87, 0.12), transparent 32%),
-    var(--bg);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.38)),
+    url("/audience-background.jpg") center / cover fixed;
   color: var(--ink);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.1);
+  content: "";
 }
 
 button,
@@ -35,26 +43,29 @@ textarea {
 
 .stage {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: 22px;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 24px;
   min-height: 100vh;
-  padding: 28px;
+  padding: 32px;
 }
 
 .cloud-panel,
 .side-panel,
 .submit-panel {
-  background: rgba(255, 253, 248, 0.88);
-  border: 1px solid rgba(217, 210, 198, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.72);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(14px) saturate(1.08);
 }
 
 .cloud-panel {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 56px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82)),
+    rgba(255, 255, 255, 0.9);
   border-radius: 8px;
-  padding: 30px;
+  padding: 34px;
 }
 
 .stage-top {
@@ -63,12 +74,12 @@ textarea {
   justify-content: space-between;
   gap: 20px;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 22px;
+  padding-bottom: 24px;
 }
 
 .eyebrow {
   margin: 0 0 8px;
-  color: var(--green);
+  color: var(--blue);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0;
@@ -85,6 +96,10 @@ h1 {
   display: grid;
   justify-items: end;
   min-width: 112px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
 }
 
 .counter span {
@@ -108,7 +123,18 @@ h1 {
   gap: 14px 22px;
   flex-wrap: wrap;
   overflow: hidden;
-  padding: 30px 10px;
+  min-height: 56vh;
+  padding: 34px 18px;
+}
+
+.word-cloud::before {
+  position: absolute;
+  inset: 18px 0;
+  z-index: -1;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2) 62%, transparent 75%);
+  content: "";
 }
 
 .cloud-word {
@@ -151,6 +177,10 @@ h1 {
 
 .empty-state {
   color: var(--muted);
+  padding: 18px 22px;
+  border: 1px dashed rgba(20, 32, 50, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.66);
   font-size: 24px;
   font-weight: 800;
 }
@@ -159,8 +189,9 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: var(--panel);
   border-radius: 8px;
-  padding: 18px;
+  padding: 20px;
 }
 
 .qr-card {
@@ -176,9 +207,9 @@ h1 {
   width: 100%;
   max-width: 260px;
   aspect-ratio: 1;
-  border: 10px solid #fff;
+  border: 12px solid #fff;
   border-radius: 8px;
-  box-shadow: 0 12px 34px rgba(23, 32, 51, 0.12);
+  box-shadow: 0 14px 34px rgba(23, 32, 51, 0.16);
 }
 
 .qr-code img,
@@ -202,6 +233,7 @@ h1 {
 .controls {
   display: grid;
   gap: 10px;
+  margin-top: 22px;
 }
 
 button {
@@ -212,6 +244,7 @@ button {
   color: #fff;
   cursor: pointer;
   font-weight: 800;
+  box-shadow: 0 12px 24px rgba(20, 32, 50, 0.18);
 }
 
 button:hover {
@@ -233,8 +266,9 @@ button:hover {
 }
 
 .submit-panel {
+  background: rgba(255, 255, 255, 0.86);
   border-radius: 8px;
-  padding: 26px;
+  padding: 28px;
 }
 
 .submit-panel h1 {
@@ -263,7 +297,7 @@ textarea {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 14px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.94);
   color: var(--ink);
   outline: none;
 }
