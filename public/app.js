@@ -92,7 +92,16 @@ function renderCloud(words, totalEntries) {
     node.style.fontSize = `${size}px`;
     node.style.setProperty("--mobile-size", `${Math.min(size, 52)}px`);
     node.style.setProperty("--tilt", `${(index % 5) * 2 - 4}deg`);
-    node.textContent = word.text;
+    const label = document.createElement("span");
+    label.className = "cloud-word-label";
+    label.textContent = word.text;
+
+    const count = document.createElement("span");
+    count.className = "cloud-word-count";
+    count.textContent = word.count;
+    count.setAttribute("aria-label", `${word.count} 次`);
+
+    node.append(label, count);
     node.title = `${word.count} 次`;
     cloud.append(node);
   });

@@ -138,13 +138,37 @@ h1 {
 }
 
 .cloud-word {
-  display: inline-block;
+  position: relative;
+  display: inline-flex;
   max-width: 100%;
+  padding: 0 0.48em 0.22em 0;
   font-weight: 900;
   line-height: 1.05;
   transform: rotate(var(--tilt));
   transition: transform 180ms ease, opacity 180ms ease;
   overflow-wrap: anywhere;
+}
+
+.cloud-word-label {
+  overflow-wrap: anywhere;
+}
+
+.cloud-word-count {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  min-width: 1.45em;
+  height: 1.45em;
+  padding: 0 0.28em;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  box-shadow: 0 7px 18px rgba(20, 32, 50, 0.22);
+  font-size: 0.24em;
+  line-height: 1;
 }
 
 .cloud-word.is-repeated {
