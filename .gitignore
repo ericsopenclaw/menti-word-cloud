@@ -3,4 +3,5 @@ node_modules/
 server.log
 screenshot-*.png
 .vercel/
+.wrangler/
 dist/

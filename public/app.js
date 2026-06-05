@@ -1,4 +1,3 @@
-const socket = io();
 const cloud = document.querySelector("#wordCloud");
 const entryCount = document.querySelector("#entryCount");
 const qrCode = document.querySelector("#qrCode");
@@ -19,27 +18,56 @@ const demoWords = [
   "自動化"
 ];
 
+let ws;
+
 fetch("/api/info")
   .then((response) => response.json())
   .then((info) => {
-    qrCode.src = info.qrDataUrl;
+    qrCode.innerHTML = "";
+    new QRCode(qrCode, {
+      text: info.joinUrl,
+      width: 260,
+      height: 260,
+      colorDark: "#111827",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
     joinUrl.href = info.joinUrl;
     joinUrl.textContent = info.joinUrl;
     renderCloud(info.words, info.totalEntries);
   });
 
-socket.on("cloud:update", (state) => {
-  renderCloud(state.words, state.totalEntries);
-});
+connect();
 
 clearButton.addEventListener("click", () => {
-  socket.emit("cloud:clear");
+  send({ type: "clear" });
 });
 
 demoButton.addEventListener("click", () => {
   const word = demoWords[Math.floor(Math.random() * demoWords.length)];
-  socket.emit("word:add", { text: word });
+  send({ type: "add", text: word });
 });
+
+function connect() {
+  const protocol = location.protocol === "https:" ? "wss" : "ws";
+  ws = new WebSocket(`${protocol}://${location.host}/ws`);
+
+  ws.addEventListener("message", (event) => {
+    const message = JSON.parse(event.data);
+    if (message.type === "state") {
+      renderCloud(message.words, message.totalEntries);
+    }
+  });
+
+  ws.addEventListener("close", () => {
+    setTimeout(connect, 1000);
+  });
+}
+
+function send(message) {
+  if (!ws || ws.readyState !== WebSocket.OPEN) return;
+  ws.send(JSON.stringify(message));
+}
 
 function renderCloud(words, totalEntries) {
   entryCount.textContent = totalEntries;

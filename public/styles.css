@@ -170,13 +170,21 @@ h1 {
   text-align: center;
 }
 
-.qr-card img {
+.qr-code {
+  display: grid;
+  place-items: center;
   width: 100%;
   max-width: 260px;
   aspect-ratio: 1;
   border: 10px solid #fff;
   border-radius: 8px;
   box-shadow: 0 12px 34px rgba(23, 32, 51, 0.12);
+}
+
+.qr-code img,
+.qr-code canvas {
+  width: 100%;
+  height: auto;
 }
 
 .qr-card p {

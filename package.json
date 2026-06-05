@@ -4,12 +4,11 @@
   "private": true,
   "description": "QR-code audience input with realtime word cloud display.",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "wrangler dev",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "qrcode": "^1.5.3",
-    "socket.io": "^4.7.5"
+    "wrangler": "^4.53.0"
   }
 }
