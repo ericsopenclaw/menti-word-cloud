@@ -81,13 +81,11 @@ function renderCloud(words, totalEntries) {
     return;
   }
 
-  const max = Math.max(...words.map((word) => word.count));
   const palette = ["ink", "blue", "green", "rose", "amber", "violet"];
 
   words.forEach((word, index) => {
     const node = document.createElement("span");
-    const repeatedWeight = max === 1 ? 0.35 : (word.count - 1) / (max - 1);
-    const size = word.count === 1 ? 22 : 30 + repeatedWeight * 66;
+    const size = Math.min(22 + (word.count - 1) * 6, 96);
     node.className = `cloud-word ${word.count > 1 ? "is-repeated" : ""} ${palette[index % palette.length]}`;
     node.style.fontSize = `${size}px`;
     node.style.setProperty("--mobile-size", `${Math.min(size, 52)}px`);
