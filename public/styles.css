@@ -147,6 +147,10 @@ h1 {
   overflow-wrap: anywhere;
 }
 
+.cloud-word.is-repeated {
+  text-shadow: 0 8px 22px rgba(20, 32, 50, 0.14);
+}
+
 .cloud-word:hover {
   transform: rotate(0deg) scale(1.06);
 }
