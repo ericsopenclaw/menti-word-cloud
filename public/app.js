@@ -83,12 +83,17 @@ function renderCloud(words, totalEntries) {
 
   const palette = ["ink", "blue", "green", "rose", "amber", "violet"];
 
+  const baseSize = 42;
+  const growthPerRepeat = 10;
+  const maxSize = 140;
+  const mobileMaxSize = 72;
+
   words.forEach((word, index) => {
     const node = document.createElement("span");
-    const size = Math.min(22 + (word.count - 1) * 6, 96);
+    const size = Math.min(baseSize + (word.count - 1) * growthPerRepeat, maxSize);
     node.className = `cloud-word ${word.count > 1 ? "is-repeated" : ""} ${palette[index % palette.length]}`;
     node.style.fontSize = `${size}px`;
-    node.style.setProperty("--mobile-size", `${Math.min(size, 52)}px`);
+    node.style.setProperty("--mobile-size", `${Math.min(size, mobileMaxSize)}px`);
     node.style.setProperty("--tilt", `${(index % 5) * 2 - 4}deg`);
     const label = document.createElement("span");
     label.className = "cloud-word-label";
