@@ -84,8 +84,8 @@ function renderCloud(words, totalEntries) {
   const palette = ["ink", "blue", "green", "rose", "amber", "violet"];
 
   const baseSize = 42;
-  const growthPerRepeat = 10;
-  const maxSize = 140;
+  const growthPerRepeat = 18;
+  const maxSize = 180;
   const mobileMaxSize = 72;
 
   words.forEach((word, index) => {
